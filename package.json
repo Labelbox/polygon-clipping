@@ -1,5 +1,5 @@
 {
-  "name": "polygon-clipping",
+  "name": "@labelbox/polygon-clipping",
   "version": "0.13.1",
   "description": "Apply boolean Polygon clipping operations (intersection, union, difference, xor) to your Polygons & MultiPolygons.",
   "main": "dist/polygon-clipping.cjs.js",
@@ -39,9 +39,8 @@
     "geometry",
     "martinez"
   ],
-  "repository": "github:mfogel/polygon-clipping",
-  "author": "Mike Fogel <mike@fogel.ca>",
-  "license": "MIT",
+  "repository": "https://github.com/Labelbox/polygon-clipping",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
