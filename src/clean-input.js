@@ -116,6 +116,7 @@ export const cleanMultiPoly = multipoly => {
  * WARN: input modified directly */
 export const cleanRing = ring => {
   if (ring.length === 0) return
+  const ringLengthBeforeTheClean = ring.length
   const firstPt = ring[0]
   const lastPt = ring[ring.length - 1]
   if (firstPt.x === lastPt.x && firstPt.y === lastPt.y) ring.pop()
@@ -138,4 +139,32 @@ export const cleanRing = ring => {
   // shrink it down to the empty array to communicate to our caller to
   // drop it
   while (ring.length < 3 && ring.length > 0) ring.pop()
+
+  /**
+   * If at least one item has been removed from the ring, we need to re-run the cleanRing function with the new ring
+   * to avoid situations when new neighbor items are duplicated or have the same vector angle
+   *
+   * Imagine we have an initial ring with the following points:
+   * [{ x: 1, y: 1 },
+   *  { x: 2, y: 0 },
+   *  { x: 1, y: 0 },
+   *  { x: 1, y: 1 },
+   *  { x: 0,  y: 1 }]
+   *
+   * When we run the cleanRing with those points, it will remove from the list only the last one, as the value of the
+   * compareVectorAngles(pt, prevPt, nextPt) will be true ( compareVectorAngles({x: 0, y:1}, {x:1, y:1}, {x:1, y:1}) ),
+   * and the pre-last point will become the last one, which is the same as the first point, but the code wouldn't check
+   * that anymore and will move on with the result:
+   *
+   * [{ x: 1, y: 1 },
+   *  { x: 2, y: 0 },
+   *  { x: 1, y: 0 },
+   *  { x: 1, y: 1 }]
+   *
+   *  To prevent this kind of situation, we need to run the output data through the cleanRing function once again, if
+   *  at least one point has been removed
+   */
+  if (ringLengthBeforeTheClean !== ring.length) {
+    cleanRing(ring)
+  }
 }

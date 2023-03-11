@@ -196,6 +196,23 @@ describe('cleanRing()', () => {
     expect(ringBad).toEqual(ringGood)
   })
 
+  test('keeps removing duplicate points, in case they come out after the first run', () => {
+    const ringBad =[
+      { x: 1, y: 1 },
+      { x: 2, y: 0 },
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 0,  y: 1 }
+    ]
+    const ringGood =[
+      { x: 1, y: 1 },
+      { x: 2, y: 0 },
+      { x: 1, y: 0 }
+    ]
+    cleanRing(ringBad)
+    expect(ringBad).toEqual(ringGood)
+  })
+
   test('removes colinear points', () => {
     const ringBad = [
       { x: 0, y: 0 },
