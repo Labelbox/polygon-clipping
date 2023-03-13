@@ -1,5 +1,3 @@
-import { touch } from './flp'
-
 /**
  * A bounding box has the format:
  *
@@ -9,23 +7,10 @@ import { touch } from './flp'
 
 export const isInBbox = (bbox, point) => {
   return (
-    (bbox.ll.x <= point.x) &&
-    (point.x <= bbox.ur.x) &&
-    (bbox.ll.y <= point.y) &&
-    (point.y <= bbox.ur.y)
-  )
-}
-
-/* Greedy comparison with a bbox. A point is defined to 'touch'
- * a bbox if:
- *  - it is inside the bbox
- *  - it 'touches' one of the sides (another greedy comparison) */
-export const touchesBbox = (bbox, point) => {
-  return (
-    ((bbox.ll.x <= point.x) || touch(bbox.ll.x, point.x)) &&
-    ((point.x <= bbox.ur.x) || touch(point.x, bbox.ur.x)) &&
-    ((bbox.ll.y <= point.y) || touch(bbox.ll.y, point.y)) &&
-    ((point.y <= bbox.ur.y) || touch(point.y, bbox.ur.y))
+    bbox.ll.x <= point.x &&
+    point.x <= bbox.ur.x &&
+    bbox.ll.y <= point.y &&
+    point.y <= bbox.ur.y
   )
 }
 
@@ -39,7 +24,8 @@ export const getBboxOverlap = (b1, b2) => {
     b1.ur.x < b2.ll.x ||
     b2.ur.y < b1.ll.y ||
     b1.ur.y < b2.ll.y
-  ) return null
+  )
+    return null
 
   // find the middle two X values
   const lowerX = b1.ll.x < b2.ll.x ? b2.ll.x : b1.ll.x

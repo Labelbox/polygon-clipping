@@ -1,0 +1,1 @@
+var e="FeatureCollection",t=[{type:"Feature",properties:{},geometry:{type:"Polygon",coordinates:[[[35,13],[42,20],[38,23],[35,20],[33,23],[33,23],[29,19],[35,13]]]}},{type:"Feature",properties:{},geometry:{type:"Polygon",coordinates:[[[35,13],[42,20],[38,23],[35,20],[33,23],[33,23],[29,19],[35,13]]]}}];const r={type:e,features:t};export{r as default,t as features,e as type};
